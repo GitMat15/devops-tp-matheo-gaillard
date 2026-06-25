@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: rapidnote_app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rapidnote_app
+  template:
+    metadata:
+      labels:
+        app: rapidnote_app
+    spec:
+      containers:
+      - name: app
+        image: matheo15/rapidnote_app:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: app-volume
+          mountPath: /var/www/html
+      volumes:
+      - name: app-volume
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: php-task-app-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 80
+  type: LoadBalancer

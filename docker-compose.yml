@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .  # Le contexte de build est le répertoire courant
+      dockerfile: Dockerfile  # Utilise le Dockerfile situé dans ce répertoire pour construire l'image
+    ports:
+      - "8000:80"  # Redirige le port 80 du conteneur vers le port 8000 de l'hôte
+    volumes:
+      - ./src:/var/www/html  # Monte le dossier local ./src dans le conteneur à /var/www/html
+    depends_on:
+      - db  # Attend que le service "db" soit démarré avant de lancer ce conteneur
+    container_name: rapidnote_app  # Nom personnalisé pour le conteneur de l'application
+
+  db:
+    image: mysql:8.0  # Utilise l'image officielle MySQL version 8.0
+    container_name: rapidnote_db  # Nom personnalisé pour le conteneur de la base de données
+    restart: always  # Redémarre automatiquement le conteneur en cas de crash
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Mot de passe du super-utilisateur MySQL
+      MYSQL_DATABASE: notes_db  # Nom de la base de données à créer au démarrage
+      MYSQL_USER: user  # Nom d'utilisateur pour l'accès à la base
+      MYSQL_PASSWORD: password  # Mot de passe associé à l'utilisateur
+    ports:
+      - "3306:3306"  # Expose le port 3306 du conteneur (MySQL) vers l'hôte
+    volumes:
+      - db_data:/var/lib/mysql  # Stocke les données MySQL de manière persistante dans un volume nommé
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro  # Initialise la base avec ce script SQL (lecture seule)
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin  # Utilise l'image officielle de phpMyAdmin
+    container_name: phpmyadmin  # Nom personnalisé pour le conteneur phpMyAdmin
+    restart: always  # Redémarrage automatique en cas de plantage
+    environment:
+      PMA_HOST: db  # Définit le conteneur MySQL cible comme "db"
+      PMA_USER: root  # Nom d'utilisateur pour se connecter à MySQL via phpMyAdmin
+      PMA_PASSWORD: root  # Mot de passe pour l'utilisateur root MySQL
+    ports:
+      - "8080:80"  # Redirige le port 80 du conteneur vers le port 8080 de l'hôte (accès à l'interface web)
+    depends_on:
+      - db  # phpMyAdmin attend que le conteneur "db" soit opérationnel avant de démarrer
+
+volumes:
+  db_data:  # Déclaration du volume nommé utilisé pour stocker les données persistantes de MySQL
