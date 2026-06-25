@@ -25,8 +25,8 @@ RapidNote est une application web simple de prise de notes développée en PHP a
 *1. Cloner le dépôt :*
 
 ```bash
-git clone https://github.com/GitMat15/ProjetDevOps.git
-cd rapidnote
+git clone https://github.com/GitMat15/devops-tp-matheo-gaillard
+cd devops-tp-matheo-gaillard
 ```
 
 *2. Démarrer l'application :*
