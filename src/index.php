@@ -160,11 +160,56 @@ $notes = fetchNotes($pdo);
         .btn-container {
             margin-top: 2rem;
         }
+
+    .theme-btn {
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+        border: none;
+        background: #34495e;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+    }
+
+    .dark-mode header {
+        background-color: #1a1a1a;
+    }
+
+    .dark-mode .note-card {
+        background-color: #1e1e1e;
+        color: #ffffff;
+    }
+
+    .dark-mode .note-card p,
+    .dark-mode .note-date {
+        color: #cccccc;
+    }
+
+    .dark-mode nav a {
+        color: white;
+    }
+
+    .dark-mode .btn {
+        background-color: #4a90e2;
+    }
+
+    .dark-mode .btn:hover {
+        background-color: #357abd;
+    }
+
     </style>
 </head>
 <body>
     <header>
     <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+    <button id="theme-toggle" class="theme-btn">🌙</button>
     <h1>📝 RapidNote</h1>
     <h2>Prenez des notes en quelques clics !</h2>
     <nav aria-label="Navigation principale">
@@ -207,7 +252,26 @@ $notes = fetchNotes($pdo);
         const navList = document.getElementById('nav-list');
 
         toggleBtn.addEventListener('click', () => {
-            navList.classList.toggle('show');
+         navList.classList.toggle('show');
+     });
+
+        const themeBtn = document.getElementById('theme-toggle');
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeBtn.textContent = '☀️';
+    }
+
+        themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            themeBtn.textContent = '☀️';
+         } else {
+            localStorage.setItem('theme', 'light');
+            themeBtn.textContent = '🌙';
+        }
         });
     </script>
 </body>
