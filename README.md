@@ -1,5 +1,7 @@
 # 📝 RapidNote
 
+[![CI](https://github.com/GitMat15/devops-tp-matheo-gaillard/actions/workflows/ci.yml/badge.svg)](https://github.com/GitMat15/devops-tp-matheo-gaillard/actions/workflows/ci.yml)
+
 RapidNote est une application web simple de prise de notes développée en PHP avec une base de données MySQL. Elle permet d’ajouter, consulter, modifier et supprimer des notes rapidement via une interface intuitive et légère qui s'installe en 5 minutes !
 
 ## **Stack**
