@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main  # Déclenche le workflow lors d’un push sur la branche "main"
-      - feature/ci  # Déclenche le workflow lors d’un push sur la branche "feature/ci"
   pull_request:
     branches:
       - main  # Déclenche le workflow lors d'une pull request vers la branche "main"
@@ -50,7 +49,7 @@ jobs:
             Le workflow CI a réussi 🎉 !
             Tous les tests sont passés avec succès.
 
-            - Projet : RapidNote
+            - Projet : RapidNote (devops-tp-matheo-gaillard)
             - Branche : main
 
             GitMat15 on GitHub
