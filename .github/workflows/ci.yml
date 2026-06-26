@@ -1,0 +1,57 @@
+name: CI  # Nom du workflow (Continuous Integration)
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le workflow lors d’un push sur la branche "main"
+  pull_request:
+    branches:
+      - main  # Déclenche le workflow lors d'une pull request vers la branche "main"
+
+jobs:
+  build:  # Premier job nommé "build"
+    runs-on: ubuntu-latest  # Utilise la dernière version d'Ubuntu comme environnement d’exécution
+
+    steps:
+      - name: Vérification du code...
+        uses: actions/checkout@v2  # Étape pour cloner le dépôt GitHub dans l’environnement de travail
+
+      - name: Configuration de l'environnement PHP...
+        uses: shivammathur/setup-php@v2  # Configure l'environnement PHP
+        with:
+          php-version: '8.1'  # Version de PHP à utiliser
+          extensions: mbstring, mysql, curl  # Extensions PHP nécessaires au projet
+
+      - name: Installation des dépendances...
+        run: composer install  # Installe les dépendances définies dans composer.json
+
+      - name: Lancemenent des tests unitaires...
+        run: vendor/bin/phpunit --configuration phpunit.xml  # Exécute les tests unitaires avec la configuration PHPUnit
+
+  notify:  # Deuxième job nommé "notify"
+    needs: build  # Ce job dépend du succès du job "build"
+    if: success()  # Ce job s'exécute uniquement si "build" a réussi
+    runs-on: ubuntu-latest  # Environnement d’exécution
+
+    steps:
+      - name: Envoi d'un email de notification...
+        uses: dawidd6/action-send-mail@v3  # Utilise une action GitHub pour envoyer un email
+        with:
+          server_address: smtp.gmail.com  # Adresse SMTP du serveur de messagerie
+          server_port: 587  # Port SMTP utilisé pour l’envoi (STARTTLS)
+          username: ${{ secrets.MAIL_USERNAME }}  # Nom d’utilisateur (stocké en secret)
+          password: ${{ secrets.MAIL_PASSWORD }}  # Mot de passe (stocké en secret)
+          subject: ✅ CI Réussi - RapidNote  # Sujet de l’email
+          body: |  # Corps de l’email, message formaté avec informations sur la CI
+            Bonjour,
+
+            Ceci est un mail automatique envoyé par GitHub Actions, merci de ne pas y répondre.
+            Le workflow CI a réussi 🎉 !
+            Tous les tests sont passés avec succès.
+
+            - Projet : RapidNote (devops-tp-matheo-gaillard)
+            - Branche : main
+
+            GitMat15 on GitHub
+          to: matheo.gaillard@ecole-hexagone.com  # Destinataire de l’email
+          from: GitHub Actions <${{ secrets.MAIL_USERNAME }}>  # Expéditeur affiché dans l’email
