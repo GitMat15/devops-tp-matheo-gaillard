@@ -121,9 +121,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 padding: 1rem;
             }
         }
+
+        
+    theme-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        background: #34495e;
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+    }
+
+.dark-mode .container,
+.dark-mode h1,
+.dark-mode label {
+    color: #ffffff;
+}
+
+.dark-mode .form-container {
+    background-color: #1e1e1e;
+    box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+
+.dark-mode input,
+.dark-mode textarea {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+    color: #bbbbbb;
+}
+
+.dark-mode .flash-message {
+    background-color: #1f3b1f;
+    border-color: #2ecc71;
+    color: #ffffff;
+}
+
     </style>
 </head>
 <body>
+    <button id="theme-toggle" class="theme-btn">🌙</button>
     <?php include 'templates/header.php'; ?>
 
     <main class="container">
@@ -151,13 +203,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <script>
-        const toggleBtn = document.querySelector('.menu-toggle');
-        const navList = document.getElementById('nav-list');
+<script>
+    const toggleBtn = document.querySelector('.menu-toggle');
+    const navList = document.getElementById('nav-list');
 
+    if (toggleBtn && navList) {
         toggleBtn.addEventListener('click', () => {
             navList.classList.toggle('show');
         });
-    </script>
+    }
+
+    const themeBtn = document.getElementById('theme-toggle');
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+
+        if (themeBtn) {
+            themeBtn.textContent = '☀️';
+        }
+    }
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeBtn.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeBtn.textContent = '🌙';
+            }
+        });
+    }
+</script>
 </body>
 </html>
