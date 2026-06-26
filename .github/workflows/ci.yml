@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Déclenche le workflow lors d’un push sur la branche "main"
+      - feature/ci  # Déclenche le workflow lors d’un push sur la branche "feature/ci"
   pull_request:
     branches:
       - main  # Déclenche le workflow lors d'une pull request vers la branche "main"
