@@ -1,4 +1,4 @@
-# Tests
+# Tests du projet :
 
 Le projet RapidNote utilise **PHPUnit** pour vérifier le bon fonctionnement des principales fonctionnalités.
 
@@ -61,4 +61,3 @@ La fonction retourne un tableau contenant les deux notes enregistrées dans la b
 ## Intégration Continue
 
 Les tests sont exécutés automatiquement par GitHub Actions lors des opérations de CI afin de garantir la stabilité de l'application avant chaque mise en production.
-``
