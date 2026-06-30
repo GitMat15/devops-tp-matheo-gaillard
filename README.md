@@ -68,4 +68,4 @@ Mathéo GAILLARD *Étudiant à Hexagone (M1-SI)*
 ## **Licence**
 
 Ce projet est sous licence MIT. 
-Voir le fichier [LICENSE.md](LICENSE).
+Voir le fichier [LICENSE](LICENSE.md).
