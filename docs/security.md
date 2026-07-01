@@ -1,13 +1,12 @@
+# Points importants sur la sécurité — RapidNote
 
-# 🔐 Points importants sur la sécurité — RapidNote
-
-### 🔑 Exposition de secrets
+### Exposition de secrets
 
 - Utiliser les **GitHub Secrets** pour les workflows (MAIL, DOCKER, etc.)
 
 ---
 
-### 🗄️ Indisponibilité de la base de données
+### Indisponibilité de la base de données
 
 - Utiliser Docker pour isoler la base de données
 - Vérifier que les conteneurs sont actifs
@@ -15,14 +14,14 @@
 
 ---
 
-### ⚠️ Vulnérabilités dans le code
+### Vulnérabilités dans le code
 
 - Utiliser des requêtes préparées avec PDO (protection contre les injections SQL)
 - Mettre à jour régulièrement les dépendances PHP
 
 ---
 
-### 🐳 Problèmes liés à Docker
+### Problèmes liés à Docker
 
 - Utiliser des images Docker officielles
 - Maintenir les images à jour
@@ -30,7 +29,7 @@
 
 ---
 
-### 🔄 Pipeline CI/CD
+### Pipeline CI/CD
 
 - Vérifier que les tests PHPUnit passent avant déploiement
 - Utiliser GitHub Actions pour automatiser les vérifications
